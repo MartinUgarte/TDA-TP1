@@ -1,16 +1,14 @@
-import random
+
 import heapq
 
 
 def k_merge_heap(arreglos_ordenados):
     h = []
     arreglo_resultado = []
-    if len(arreglos_ordenados) == 0:
-        return arreglo_resultado
     
     for i in range(len(arreglos_ordenados)):
         if len(arreglos_ordenados[i]) == 0: continue
-        heapq.heappush(h,[arreglos_ordenados[i][0], i, 0])
+        heapq.heappush(h,[arreglos_ordenados[i][0],i , 0])
      
     while len(h) != 0:
         minimo = heapq.heappop(h)
