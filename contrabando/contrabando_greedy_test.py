@@ -1,9 +1,13 @@
 import unittest
 from contrabando_greedy import obtener_paquetes_greedy
+from armar_set import armar_set_datos
 
 PRODUCTO_UNO = "cigarrillos"
 PRODUCTO_DOS = "vodka"
 PRODUCTO_TRES = "hojas de menta"
+PRODUCTOS = [PRODUCTO_UNO, PRODUCTO_DOS, PRODUCTO_TRES]
+VOLUMEN = 200
+ITERACIONES_VOLUMEN = 10
 
 class TestContrabandoGreedy(unittest.TestCase):
 
@@ -16,34 +20,42 @@ class TestContrabandoGreedy(unittest.TestCase):
     def test_un_paquete(self):
         mercaderia = { PRODUCTO_UNO: [8] }
         pedidos = { PRODUCTO_UNO: 6 }
-        # coima_esperada = { PRODUCTO_UNO: [8] }
         self.assertTrue(sum(obtener_paquetes_greedy(pedidos, mercaderia)[PRODUCTO_UNO]) >= pedidos[PRODUCTO_UNO])
 
     def test_dos_paquetes_mismo_producto(self):
         mercaderia = { PRODUCTO_UNO: [5, 8] }
         pedidos = { PRODUCTO_UNO: 5 }
-        # coima_esperada = { PRODUCTO_UNO: [5] }
         self.assertTrue(sum(obtener_paquetes_greedy(pedidos, mercaderia)[PRODUCTO_UNO]) >= pedidos[PRODUCTO_UNO])
 
     def test_mismo_producto(self):
         mercaderia = { PRODUCTO_UNO: [2, 8, 3] }
         pedidos = { PRODUCTO_UNO: 5 }
-        # coima_esperada = { PRODUCTO_UNO: [3, 2] }
         self.assertTrue(sum(obtener_paquetes_greedy(pedidos, mercaderia)[PRODUCTO_UNO]) >=  pedidos[PRODUCTO_UNO])
     
     def test_diferentes_productos(self):
         mercaderia = { PRODUCTO_UNO: [3, 12], PRODUCTO_DOS: [4, 9] }
         pedidos = { PRODUCTO_UNO: 2, PRODUCTO_DOS: 7 }
-        # coima_esperada = { PRODUCTO_UNO: [3], PRODUCTO_DOS: [9] }
         for producto in pedidos:
             self.assertTrue(sum(obtener_paquetes_greedy(pedidos, mercaderia)[producto]) >= pedidos[producto])
 
     def test_varios_productos(self):
         mercaderia = { PRODUCTO_UNO: [4, 12, 3], PRODUCTO_DOS: [9, 9, 6], PRODUCTO_TRES: [2, 8, 3] }
         pedidos = { PRODUCTO_TRES: 5, PRODUCTO_UNO: 2, PRODUCTO_DOS: 8 }
-        # coima_esperada = { PRODUCTO_TRES: [3, 2], PRODUCTO_UNO: [3], PRODUCTO_DOS: [9] }
         for producto in pedidos:
             self.assertTrue(sum(obtener_paquetes_greedy(pedidos, mercaderia)[producto]) >= pedidos[producto])
+
+    def test_volumen(self):
+        pedido, mercaderia, solucion = armar_set_datos(PRODUCTOS, VOLUMEN)
+        obtenido = obtener_paquetes_greedy(pedido, mercaderia)
+        for producto in pedido:
+            self.assertTrue(sum(obtenido[producto]) >= sum(solucion[producto]))
+        
+    def test_super_volumen(self):
+        for _ in range(ITERACIONES_VOLUMEN):
+            pedido, mercaderia, solucion = armar_set_datos(PRODUCTOS, VOLUMEN)
+            obtenido = obtener_paquetes_greedy(pedido, mercaderia)
+            for producto in pedido:
+                self.assertTrue(sum(obtenido[producto]) >= sum(solucion[producto]))
 
 if __name__ == "__main__":
     unittest.main()

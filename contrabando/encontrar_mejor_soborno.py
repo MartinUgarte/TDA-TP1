@@ -1,41 +1,37 @@
 import random
 from contrabando_dinamica import obtener_paquetes_dinamica
 from contrabando_greedy import obtener_paquetes_greedy
+from armar_set import armar_set_datos
 
 PRODUCTO_UNO = "cigarrillos"
 PRODUCTO_DOS = "vodka"
 PRODUCTO_TRES = "naipes"
+VOLUMEN = 100
 
-def ordenar_paquetes(mercaderia, reverse):
+def ordenar_paquetes(mercaderia):
     for producto, cantidad in mercaderia.items():
-        mercaderia[producto] = sorted(cantidad, reverse=reverse)
-
-def generar():
-    mercaderia_ordenada = {PRODUCTO_UNO: [12,7,3,2], PRODUCTO_DOS:[8,6], PRODUCTO_TRES:[54,32,14,2]}
-    mercaderia_desordenada = {PRODUCTO_UNO: [3,7,2,12], PRODUCTO_DOS:[6,8], PRODUCTO_TRES:[14,2,32,54]}
-    coima_pedida = {PRODUCTO_UNO: 5, PRODUCTO_DOS: 7, PRODUCTO_TRES: 20}
-    solucion_optima = {PRODUCTO_UNO: [3,2], PRODUCTO_DOS: [8], PRODUCTO_TRES: [32]}
-    return mercaderia_ordenada, mercaderia_desordenada, coima_pedida, solucion_optima
+        mercaderia[producto] = sorted(cantidad, reverse=True)
+    return mercaderia
 
 
 def greedy_es_optimo_ordenado():
-    mercaderia_ordenada, _, coima_pedida, solucion_optima = generar()
-    resultado_ordenado = obtener_paquetes_greedy(coima_pedida, mercaderia_ordenada)
+    coima_pedida, mercaderia, solucion_optima = armar_set_datos([PRODUCTO_UNO, PRODUCTO_DOS, PRODUCTO_TRES], VOLUMEN)
+    resultado_ordenado = obtener_paquetes_greedy(coima_pedida, ordenar_paquetes(mercaderia))
 
     return solucion_es_optima(resultado_ordenado, solucion_optima)
     
 
 def greedy_es_optimo_desordenado():
-    _, mercaderia_desordenada, coima_pedida, solucion_optima = generar()
-    resultado_desordenado = obtener_paquetes_greedy(coima_pedida, mercaderia_desordenada)
+    coima_pedida, mercaderia, solucion_optima = armar_set_datos([PRODUCTO_UNO, PRODUCTO_DOS, PRODUCTO_TRES], VOLUMEN)
+    resultado_desordenado = obtener_paquetes_greedy(coima_pedida, mercaderia)
 
     return solucion_es_optima(resultado_desordenado, solucion_optima)
 
 def dinamica_siempre_es_optimo():
-    mercaderia_ordenada, mercaderia_desordenada, coima_pedida, solucion_optima = generar()
+    coima_pedida, mercaderia, solucion_optima = armar_set_datos([PRODUCTO_UNO, PRODUCTO_DOS, PRODUCTO_TRES], VOLUMEN)
 
-    resultado_ordenado = obtener_paquetes_dinamica(coima_pedida, mercaderia_ordenada)
-    resultado_desordenado = obtener_paquetes_dinamica(coima_pedida, mercaderia_desordenada)
+    resultado_ordenado = obtener_paquetes_dinamica(coima_pedida, ordenar_paquetes(mercaderia))
+    resultado_desordenado = obtener_paquetes_dinamica(coima_pedida, mercaderia)
 
     return solucion_es_optima(resultado_ordenado, solucion_optima) and solucion_es_optima(resultado_desordenado, solucion_optima)
     
@@ -43,9 +39,8 @@ def dinamica_siempre_es_optimo():
 def solucion_es_optima(solucion_obtenida, solucion_esperada):
     result = True
     for pedido in solucion_obtenida:
-        for unidad in solucion_obtenida[pedido]:
-            if unidad not in solucion_esperada[pedido]:
-                result = False
+        if sum(solucion_obtenida[pedido]) != sum(solucion_esperada[pedido]):
+            result = False
     return result
 
 def arreglos_volumen():
@@ -53,13 +48,16 @@ def arreglos_volumen():
     soluciones_optimas = []
     return arreglos, soluciones_optimas
 
-def prueba_volumen_greedy():
-    pass
 
-def prueba_volumen_dinamica():
-    pass
-
-
-print(greedy_es_optimo_ordenado())
-print(greedy_es_optimo_desordenado())
-print(dinamica_siempre_es_optimo())
+def main():
+    porcentaje_greedy_ordenado = 0
+    porcentaje_greedy_desordenado = 0
+    porcentaje_dinamica = 0
+    for n in range(VOLUMEN):
+        porcentaje_greedy_ordenado += greedy_es_optimo_ordenado()
+        porcentaje_greedy_desordenado += greedy_es_optimo_desordenado()
+        porcentaje_dinamica += dinamica_siempre_es_optimo()
+    print("Porcentaje de veces que greedy es optimo con mercaderia ordenada: ", porcentaje_greedy_ordenado/VOLUMEN)
+    print("Porcentaje de veces que greedy es optimo con mercaderia desordenada: ", porcentaje_greedy_desordenado/VOLUMEN)
+    print("Porcentaje de veces que dinamica es optimo: ", porcentaje_dinamica/VOLUMEN)
+main()

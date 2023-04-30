@@ -1,9 +1,13 @@
 import unittest
+from armar_set import armar_set_datos
 from contrabando_dinamica import obtener_paquetes_dinamica
 
 PRODUCTO_UNO = "cigarrillos"
 PRODUCTO_DOS = "vodka"
 PRODUCTO_TRES = "naipes"
+PRODUCTOS = [PRODUCTO_UNO, PRODUCTO_DOS, PRODUCTO_TRES]
+VOLUMEN = 200
+ITERACIONES_VOLUMEN = 10
 
 class TestContrabandoDinamica(unittest.TestCase):
 
@@ -42,6 +46,20 @@ class TestContrabandoDinamica(unittest.TestCase):
         pedidos = { PRODUCTO_UNO: 2, PRODUCTO_DOS: 8, PRODUCTO_TRES: 5 }
         coima_esperada = { PRODUCTO_UNO: [3], PRODUCTO_DOS: [9], PRODUCTO_TRES: [3, 2] }
         self.assertEqual(obtener_paquetes_dinamica(pedidos, mercaderia), coima_esperada)
+
+    def test_volumen(self):
+        pedido, mercaderia, solucion = armar_set_datos(PRODUCTOS, VOLUMEN)
+        obtenido = obtener_paquetes_dinamica(pedido, mercaderia)
+        for producto in pedido:
+            self.assertTrue(sum(obtenido[producto]) == sum(solucion[producto]))
         
+    def test_super_volumen(self):
+        for _ in range(ITERACIONES_VOLUMEN):
+            pedido, mercaderia, solucion = armar_set_datos(PRODUCTOS, VOLUMEN)
+            obtenido = obtener_paquetes_dinamica(pedido, mercaderia)
+            for producto in pedido:
+                self.assertTrue(sum(obtenido[producto]) == sum(solucion[producto]))
+
+
 if __name__ == "__main__":
     unittest.main()

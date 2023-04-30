@@ -36,7 +36,7 @@ Las mediciones se encuentran en el archivo *graficos.py*
 
 > 4. En caso que la complejidad obtenida en el punto 1 no se condiga con la realidad, indicar por qué (qué condición falla).
 
-TODO
+- El teorema Maestro contempla el caso en el que se ordena un solo arreglo --> mergesort, cuando nuestro metodo de ordenamiento aplica mergesort reiteradamente.
 
 > 5. En dicho caso, se requiere llegar a la complejidad correcta (no solamente enunciarla, sino demostrar cuál es).
 
@@ -81,15 +81,13 @@ El algoritmo es dinamico, porque evalua todas las posibles soluciones.
 La complejidad del algoritmo es O(...)
 La ecuacion de recurrencia es: $OPT(n, W) = min_condicionado(a, b)$, donde a = no usar el elemento: $OPT(n-1, W)$ y b = usar el elemento: $OPT(n-1, W-Pi) + Vi$ o solo $Vi$
 
-
-
 > 3. Indicar y justificar la complejidad de ambos algoritmos propuestos. Indicar casos (características y ejemplos) de deficiencias en el algoritmo greedy propuesto, para los cuales este no obtenga una solución óptima.
  
 TODO
-- El de greedy va a ser O(nlogn) + O(el alg greedy) --> el costo de ordenar mas el del algoritmo en si.
+- El de greedy va a ser O(el alg greedy) 
 - Por ahi en nuestra implementacion no deberiamos ordenar, para mostrar que no siempre es optimo, y al fijanos las comparaciones, mostramos que ordenando si encuentra el optimo. 
 
-- Nuestro algoritmo dinamico tiene una complejidad O(d*(n * peso)), donde _n_ representa la cantidad de elementos a evaluar, _peso_ es la cantidad maxima de unidades disponibles, y _d_ es la cantidad de elementos pedidos como soborno. 
+- Nuestro algoritmo dinamico tiene una complejidad O(d*(n * peso)), donde _n_ representa la cantidad de elementos a evaluar, _peso_ es la cantidad maxima de unidades disponibles, y _d_ es la cantidad de elementos pedidos como soborno. Y reconstruir la solucion es O(n), porque recorres una fila maximo una sola vez.
 
 > 4. Implementar un programa que utilice ambos algoritmos, realizar mediciones y presentar resultados comparativos de ambas soluciones, en lo que refiere a su optimalidad de la solución (no de su complejidad). Incluir en la entrega del tp los sets de datos utilizados para estas simulaciones (que deben estar explicados en el informe). Estos deben incluir al menos una prueba de volumen, indicando cómo es que fueron generadas.
 

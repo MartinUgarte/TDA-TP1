@@ -1,6 +1,4 @@
-# def ordenar_paquetes(mercaderia, reverse):
-#     for producto, cantidad in mercaderia.items():
-#         mercaderia[producto] = sorted(cantidad, reverse=reverse)
+
 	
 def cantidad_productos(mercaderia):
     cantidades = {}
@@ -11,8 +9,6 @@ def cantidad_productos(mercaderia):
     
 def obtener_paquetes_greedy(pedidos, mercaderia):
     resultado = {}  
-    # ordenar_paquetes(mercaderia, True)
-
     productos = cantidad_productos(mercaderia)
 
     for coima, cantidad in pedidos.items():
@@ -25,3 +21,9 @@ def obtener_paquetes_greedy(pedidos, mercaderia):
         resultado[coima] = solucion    
 
     return resultado
+
+# variables:
+# cant_productos: cantidad de productos que hay en el pedido --> "cigarrillo", "vodka" = 2
+# cant_paquetes: cantidad de paquetes que hay por cada producto --> "cigarrillo" = [3,4,6,7] --> 4 "vodkas" = [2,3,4,5] --> 4
+ 
+# O(cant_productos * cant_paquetes)
