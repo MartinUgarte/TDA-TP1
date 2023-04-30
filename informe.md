@@ -1,8 +1,8 @@
 # Teoría De Algortimos I
 
-### Aumnos
+### Alumnos
 
-- Martina Lozano: xxxxx
+- Martina Lozano: 106267
 - Martin Ugarte: 107870
 
 ## Primera Parte: *K-merge*
@@ -69,13 +69,16 @@ resultado = {
 
 > 1. Describir e implementar un algoritmo greedy que, dado un input con los productos que se tienen, y lo pedido como soborno, nos permita salir airosos de la situación, con la mayor cantidad de productos posibles. Justificar por qué el algoritmo es, efectivamente, greedy. Considerar que siempre se nos pedirá una cantidad de productos en existencias (en nuestro ejemplo anterior, no nos habrían pedido que dejemos 7 botellas de vodka radioactivo, ni tampoco mandarinas del Sahara).
 
-En primer lugar,
+En primer lugar, para la solución Greedy nos aseguramos que los paquetes queden ordenados por cantidad de mayor a menor y también disponemos de un diccionario que informa la cantidad pedida como soborno para cada tipo de producto. Gracias a esto, podemos recorrer los paquetes de nuestra mercadería disponible, por cada tipo de producto pedido, y ser capaces de decidir si agregar ese paquete a nuestro conjunto de soluciones o no. Esta acción se realiza de forma instantánea (por eso es Greedy) viendo si la diferencia entre la cantidad total hasta ese momento para ese producto puntual y la cantidad que provee el paquete es mayor o igual a la cantidad solicitada. De serlo, entonces esa solución no nos sirve y reducimos el problema a encontrar la cantidad deseada menos el valor de ese paquete. De lo contrario, agregamos ese paquete al conjunto de soluciones.
 
 >2. Con las mismas consideraciones que en el punto anterior, describir e implementar un algoritmo (que sea óptimo) que resuelva el problema utilizando programación dinámica.
 
 TODO
 
 > 3. Indicar y justificar la complejidad de ambos algoritmos propuestos. Indicar casos (características y ejemplos) de deficiencias en el algoritmo greedy propuesto, para los cuales este no obtenga una solución óptima.
+ 
+TODO
 
 > 4. Implementar un programa que utilice ambos algoritmos, realizar mediciones y presentar resultados comparativos de ambas soluciones, en lo que refiere a su optimalidad de la solución (no de su complejidad). Incluir en la entrega del tp los sets de datos utilizados para estas simulaciones (que deben estar explicados en el informe). Estos deben incluir al menos una prueba de volumen, indicando cómo es que fueron generadas.
 
+TODO
