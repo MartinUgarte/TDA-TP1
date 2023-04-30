@@ -73,12 +73,27 @@ En primer lugar, para la solución Greedy nos aseguramos que los paquetes queden
 
 >2. Con las mismas consideraciones que en el punto anterior, describir e implementar un algoritmo (que sea óptimo) que resuelva el problema utilizando programación dinámica.
 
-TODO
+Para resolver el problema de forma dinamica, nos inspiramos en los problemas _Subset-Sum_ y por consecuencia _Knapsack_. Como en Subset-Sum, el _valor_ y el _peso_ son iguales, en nuestro caso representan las unidades de un producto a contrabanddear dentro de un paquete. Una de las ventajas que encontramos en utilizar programacion dinamica en esta solucion es que no dependemos del orden de las unidades de cada producto para encontrar la solucion optima. A diferencia de los problemas que usamos de inspiracion, nuestro algoritmo no determina el optimo por el maximo entre usar o no el elemento, sino que armamos una funcion ```min_condicionado()``` la cual permite aplicar las condiciones particulares del problema: queremos la minima cantidad de unidades que cumplen la cantidad requerida por el agente aduanero. 
+En un principio, pensamos que podiamos solucionar el problema inspirandonos en los problemas de _Juan el vago_ y el de _Scheduling_, pero al igual que nos ocurria al intentar plantear el problema de _Knapsack_ uni-dimencional, comparar las posibles soluciones en busca del optimo nos quedaba un algoritmo de _Fuerza Bruta_ porque nunca encontrabamos un "optimo parcial" con el cual comparar, sino que debiamos comparar todas las combinaciones posibles de sumas entre si. 
+Al igual que en _Knapsack_, decidimos usar una matriz con los _elementos_ como fila y los _pesos_ como columnas. A diferencia de en los problemas mencinados, el elemento puede ser usado por si solo, es devir, el _valor actual_ puede ser solucion por si solo, y en ese caso, no seria parte de una solucion encontrada al sumar paquetes. 
+El algoritmo se repite por cada elemento pedido por el agente aduanero, encontrando la mejor combinacion de paquetes para minimizar la perdida de mercancia. 
+El algoritmo es dinamico, porque evalua todas las posibles soluciones. 
+La complejidad del algoritmo es O(...)
+La ecuacion de recurrencia es: $OPT(n, W) = min_condicionado(a, b)$, donde a = no usar el elemento: $OPT(n-1, W)$ y b = usar el elemento: $OPT(n-1, W-Pi) + Vi$ o solo $Vi$
+
+
 
 > 3. Indicar y justificar la complejidad de ambos algoritmos propuestos. Indicar casos (características y ejemplos) de deficiencias en el algoritmo greedy propuesto, para los cuales este no obtenga una solución óptima.
  
 TODO
+- El de greedy va a ser O(nlogn) + O(el alg greedy) --> el costo de ordenar mas el del algoritmo en si.
+- Por ahi en nuestra implementacion no deberiamos ordenar, para mostrar que no siempre es optimo, y al fijanos las comparaciones, mostramos que ordenando si encuentra el optimo. 
+
+- Nuestro algoritmo dinamico tiene una complejidad O(d*(n * peso)), donde _n_ representa la cantidad de elementos a evaluar, _peso_ es la cantidad maxima de unidades disponibles, y _d_ es la cantidad de elementos pedidos como soborno. 
 
 > 4. Implementar un programa que utilice ambos algoritmos, realizar mediciones y presentar resultados comparativos de ambas soluciones, en lo que refiere a su optimalidad de la solución (no de su complejidad). Incluir en la entrega del tp los sets de datos utilizados para estas simulaciones (que deben estar explicados en el informe). Estos deben incluir al menos una prueba de volumen, indicando cómo es que fueron generadas.
 
 TODO
+- creo que en lugar de test, tenemos las simulaciones. 
+- mi idea para una prueba de volumen es basicamente, plantear el resultado, generar arreglos random, y meterles el resultado. 
+- teniendo en cuenta el pedido de analisis de optimalidad, ordenar en greedy le saca proposito a las simulaciones.
