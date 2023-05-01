@@ -14,6 +14,7 @@ def obtener_paquetes_dinamica(pedido, mercaderia):
 				else:
 					m[i][j] = min_condicionado(m[i-1][j-valor_elemento] + valor_elemento, m[i-1][j], cantidad)
 		solucion[coima] = reconstruir_solucion(m, mercaderia[coima])
+		
 
 	return solucion
 
@@ -57,16 +58,16 @@ def min_condicionado(optimo_a_evaluar, optimo_anterior, condicion):
 		return optimo_anterior
 
 
-# def imprimir_matriz(m):
-# 	for f in range(len(m)):
-# 		for c in range(len(m[0])):
-# 			print('|', str(m[f][c]).center(0), '|', end='')
-# 		print()
-# 	print()
+"""
+def imprimir_matriz(m):
+	for f in range(len(m)):
+		for c in range(len(m[0])):
+			print('|', str(m[f][c]).center(0), '|', end='')
+		print()
+	print()
 
-# pedido = {'naipes': 53}
-# mercaderia = {'naipes':[13, 11, 13, 3, 16]}
-# solucion = obtener_paquetes_dinamica(pedido, mercaderia)
-# print(solucion)
-
-# # naipes 45
+pedido = {'naipes': 22}
+mercaderia = {'naipes':[11, 11, 14,22]}
+solucion = obtener_paquetes_dinamica(pedido, mercaderia)
+print(solucion)
+"""

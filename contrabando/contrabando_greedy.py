@@ -1,6 +1,5 @@
-
-	
 def cantidad_productos(mercaderia):
+    """Devuelve un diccionario con la cantidad de productos que hay en la mercadería"""
     cantidades = {}
     for producto, cantidad in mercaderia.items():
         cantidades[producto] = sum(cantidad)
@@ -8,6 +7,7 @@ def cantidad_productos(mercaderia):
     return cantidades
     
 def obtener_paquetes_greedy(pedidos, mercaderia):
+    """Devuelve un diccionario con los paquetes que se le entregan a cada coima"""
     resultado = {}  
     productos = cantidad_productos(mercaderia)
 
