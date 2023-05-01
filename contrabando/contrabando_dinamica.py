@@ -64,3 +64,9 @@ def min_condicionado(optimo_a_evaluar, optimo_anterior, condicion):
 # 		print()
 # 	print()
 
+# pedido = {'naipes': 53}
+# mercaderia = {'naipes':[13, 11, 13, 3, 16]}
+# solucion = obtener_paquetes_dinamica(pedido, mercaderia)
+# print(solucion)
+
+# # naipes 45

@@ -43,11 +43,6 @@ def solucion_es_optima(solucion_obtenida, solucion_esperada):
             result = False
     return result
 
-def arreglos_volumen():
-    arreglos = []
-    soluciones_optimas = []
-    return arreglos, soluciones_optimas
-
 
 def main():
     porcentaje_greedy_ordenado = 0

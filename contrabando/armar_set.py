@@ -19,13 +19,12 @@ def armar_set_datos(productos, volumen):
 
         for _ in range(volumen):
             nro_random = random.randint(1, CANTIDAD_UNIDADES_MAX)
-            if nro_random > max(solucion[producto]):
-                mercaderia[producto].append(nro_random)
-            if nro_random < min(solucion[producto]):
-                continue
+            mercaderia[producto].append(nro_random)
                 
         for i in range(len(solucion[producto])):
             mercaderia[producto].insert(random.randint(0, len(mercaderia[producto])), solucion[producto][i])
+        
+        mercaderia[producto].insert(random.randint(0, len(mercaderia[producto])), sum(solucion[producto]))
         
     
     return pedido, mercaderia, solucion
