@@ -1,14 +1,10 @@
-import sys
 import random 
+from constantes import PRODUCTOS
+
+VOLUMEN = 200
 MAXIMO_NRO_PAQUETES = 5
 MAXIMO_NRO_UNIDADES = 20
 CANTIDAD_UNIDADES_MAX = 100
-
-PRODUCTO_UNO = "cigarrillos"
-PRODUCTO_DOS = "vodka"
-PRODUCTO_TRES = "naipes"
-PRODUCTOS = [PRODUCTO_UNO, PRODUCTO_DOS, PRODUCTO_TRES]
-VOLUMEN = 200
 
 def armar_set_datos(productos, volumen):
     """

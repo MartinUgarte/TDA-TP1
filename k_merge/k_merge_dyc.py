@@ -1,4 +1,3 @@
-# K-MERGE por División y Conquista
 def merge(arreglo_uno, arreglo_dos):
     arreglo_resultado = []
     i, j = 0, 0

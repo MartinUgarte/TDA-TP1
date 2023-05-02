@@ -1,11 +1,7 @@
 from contrabando_dinamica import obtener_paquetes_dinamica
 from contrabando_greedy import obtener_paquetes_greedy
 from armar_set import escribir_archivo
-
-PRODUCTO_UNO = "cigarrillos"
-PRODUCTO_DOS = "vodka"
-PRODUCTO_TRES = "naipes"
-VOLUMEN = 20
+from constantes import *
 
 def leer_archivo(nombre_archivo):
     """

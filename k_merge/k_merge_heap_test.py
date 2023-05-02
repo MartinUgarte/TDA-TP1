@@ -8,9 +8,9 @@ l2 = [2, 4, 6, 8, 10]
 def armar_lista_volumen(cant_listas, cant_digitos):
     lista_final_ordenada = []
     lista_de_listas = []
-    for i in range(cant_listas):
+    for _ in range(cant_listas):
         lista_aux = []
-        for i in range(cant_digitos):
+        for _ in range(cant_digitos):
             nro_random = random.randint(0,999)
             lista_aux.append(nro_random)
             lista_final_ordenada.append(nro_random)

@@ -1,13 +1,7 @@
 import unittest
 from contrabando_greedy import obtener_paquetes_greedy
 from armar_set import armar_set_datos
-
-PRODUCTO_UNO = "cigarrillos"
-PRODUCTO_DOS = "vodka"
-PRODUCTO_TRES = "hojas de menta"
-PRODUCTOS = [PRODUCTO_UNO, PRODUCTO_DOS, PRODUCTO_TRES]
-VOLUMEN = 200
-ITERACIONES_VOLUMEN = 10
+from constantes import *
 
 class TestContrabandoGreedy(unittest.TestCase):
 

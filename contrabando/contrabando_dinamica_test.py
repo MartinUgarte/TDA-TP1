@@ -1,13 +1,8 @@
 import unittest
 from armar_set import armar_set_datos
 from contrabando_dinamica import obtener_paquetes_dinamica
+from constantes import *
 
-PRODUCTO_UNO = "cigarrillos"
-PRODUCTO_DOS = "vodka"
-PRODUCTO_TRES = "naipes"
-PRODUCTOS = [PRODUCTO_UNO, PRODUCTO_DOS, PRODUCTO_TRES]
-VOLUMEN = 200
-ITERACIONES_VOLUMEN = 10
 
 class TestContrabandoDinamica(unittest.TestCase):
 
