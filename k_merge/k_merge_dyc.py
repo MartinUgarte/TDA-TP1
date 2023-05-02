@@ -1,28 +1,4 @@
 # K-MERGE por División y Conquista
-import random
-
-"""
-def k_merge_dyc(arreglos_ordenados):
-    if len(arreglos_ordenados) == 0:
-        return []
-    if len(arreglos_ordenados) == 1:
-        return arreglos_ordenados[0]
-    
-    medio = len(arreglos_ordenados) // 2
-    arreglo_uno = k_merge_dyc(arreglos_ordenados[0: medio])
-    arreglo_dos = k_merge_dyc(arreglos_ordenados[medio: len(arreglos_ordenados)])
-   
-    return mergesort(arreglo_uno + arreglo_dos)
-
-def mergesort(arreglo):
-    if len(arreglo) <= 1:
-        return arreglo
-    arreglo_uno = mergesort(arreglo[0: len(arreglo) // 2])
-    arreglo_dos = mergesort(arreglo[len(arreglo) // 2: len(arreglo)])
-
-    return merge(arreglo_uno, arreglo_dos)
-"""
-
 def merge(arreglo_uno, arreglo_dos):
     arreglo_resultado = []
     i, j = 0, 0
@@ -54,4 +30,3 @@ def k_merge_dyc(arreglos_ordenados):
     arreglo_dos = k_merge_dyc(arreglos_ordenados[medio: len(arreglos_ordenados)])
 
     return merge(arreglo_uno , arreglo_dos)
-

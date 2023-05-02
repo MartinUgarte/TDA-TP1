@@ -1,4 +1,7 @@
 def obtener_paquetes_dinamica(pedido, mercaderia):
+	"""
+	Recibe un pedido y la mercaderia disponible y devuelve una solucion optima
+	"""
 	solucion = {}
 	for coima, cantidad in pedido.items():
 		m = [[0 for _ in range(max(mercaderia[coima])+1)] for _ in range(len(mercaderia[coima])+1)]
@@ -19,6 +22,9 @@ def obtener_paquetes_dinamica(pedido, mercaderia):
 	return solucion
 
 def reconstruir_solucion(m, paquetes):
+	"""
+	Recibe una matriz y los paquetes y reconstruye la solucion
+	"""
 	solucion = []
 	i, j = len(m)-1, len(m[0])-1
 	while m[i][j] != 0:
@@ -35,6 +41,10 @@ def reconstruir_solucion(m, paquetes):
 	return solucion
 
 def min_condicionado(optimo_a_evaluar, optimo_anterior, condicion): 
+	"""
+	Recibe dos optimos y una condicion y devuelve el minimo que cumpla la condicion
+	"""
+
 	# los dos optimos son iguales
 	if optimo_a_evaluar == optimo_anterior: return optimo_a_evaluar
 
@@ -56,18 +66,3 @@ def min_condicionado(optimo_a_evaluar, optimo_anterior, condicion):
 	# optimo_anterior no cumple y optimo_a_evaluar si pero optimo_a_evaluar es mas grande
 	if optimo_a_evaluar < optimo_anterior and optimo_a_evaluar < condicion and optimo_anterior >= condicion: 
 		return optimo_anterior
-
-
-"""
-def imprimir_matriz(m):
-	for f in range(len(m)):
-		for c in range(len(m[0])):
-			print('|', str(m[f][c]).center(0), '|', end='')
-		print()
-	print()
-
-pedido = {'naipes': 22}
-mercaderia = {'naipes':[11, 11, 14,22]}
-solucion = obtener_paquetes_dinamica(pedido, mercaderia)
-print(solucion)
-"""
