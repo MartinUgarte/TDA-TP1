@@ -21,15 +21,15 @@ En este caso, tenemos dos llamadas recursivas, el arreglo es partido a la mitad 
 
 Por lo cual, $A = 2$, $B = 2$ y $C = 1$.
 
-Luego, $logB(A) = log_2(2) = 1$
+Luego, $\log_B(A) = \log_2(2) = 1$
 
-Según el Teorema Maestro, como $logB(A)=C=1$, entonces la complejidad del algoritmo propuesto es $O(n^c log n)=O(n logn)$, donde $n$ es la cantidad total de elementos, es decir, $k * h$.
+Según el Teorema Maestro, como $\logB(A)=C=1$, entonces la complejidad del algoritmo propuesto es $O(n^c \log n)=O(n \log n)$, donde $n$ es la cantidad total de elementos, es decir, $k * h$.
 
 > 2. Describir el algoritmo que utiliza heaps, y determinar su complejidad.
 
 Se tiene el conjunto de arreglos, el heap y un arreglo vacío. En el heap se encolan los primeros datos de cada arreglo de la forma (dato, número_arreglo). Luego, mientras que el heap no esté vacío, se desencola del heap y se agrega el valor en el arreglo solucion. Posteriormente se guarda el siguiente elemento del arreglo al que pertenecía el dato guardado, y de haber ya analizado todo el arreglo no se hace nada. Se continúa así hasta que no queda ningún dato en el heap, y se devuelve el arreglo solucion.
 
-Dado que se crea un heap de tamaño $k$, se insertan los primeros elementos de cada uno de los $k$ lo cual tiene una complejidad de $O(klogk)$ arreglos ordenados en el heap y luego se itera extrayendo un elemento ($O(1)$), e insertando otro ($O(logk)$), se puede deducir que la complejidad de este algoritmo es O(n log k), donde $n$ es la cantidad total de elementos y $k$ la cantidad de arreglos.
+Dado que se crea un heap de tamaño $k$, se insertan los primeros elementos de cada uno de los $k$ lo cual tiene una complejidad de $O(k\log k)$ arreglos ordenados en el heap y luego se itera extrayendo un elemento ( $O(1)$ ), e insertando otro ( $O(\logk)$ ), se puede deducir que la complejidad de este algoritmo es $O(n \log k)$, donde $n$ es la cantidad total de elementos y $k$ la cantidad de arreglos.
 
 > 3. Implementar ambos algoritmos, y hacer mediciones (y gráficos) que permitan entender si las complejidades obtenidas para cada uno se condicen con la realidad.
 
@@ -44,7 +44,7 @@ La complejidad obtenida en el punto 1, es decir, utilizando el teorema maestro, 
 
 > 5. En dicho caso, se requiere llegar a la complejidad correcta (no solamente enunciarla, sino demostrar cuál es).
 
-En base a lo explicado en el inciso anterior, el teorema maestro no está considerando el ciclo generado al repetir la funcion por los k arreglos, el cual al final de cuentas termina teniendo una complejidad de $O(n)$ donde $n$ es la cantidad total de elementos en el problema. En consecuencia, según nosotros la complejidad real sería $O(n^2logn)$, lo cual puede verse plasmado en los gráficos. La verdadera curva $O(nlogk)$ es la que se en el grafico del k_merge_heap, y se puede ver como en los ambos casos de D&C las curvas divergen cuando heap se empieza a planchar.
+En base a lo explicado en el inciso anterior, el teorema maestro no está considerando el ciclo generado al repetir la funcion por los k arreglos, el cual al final de cuentas termina teniendo una complejidad de $O(n)$ donde $n$ es la cantidad total de elementos en el problema. En consecuencia, según nosotros la complejidad real sería $O(n^2\log n)$, lo cual puede verse plasmado en los gráficos. La verdadera curva $O(n\log k)$ es la que se en el grafico del `k_merge_heap`, y se puede ver como en los ambos casos de D&C las curvas divergen cuando heap se empieza a planchar.
 
 > 6. Indicar cualquier conclusión adicional que les parezca relevante en base a lo analizado.
 
@@ -77,7 +77,7 @@ resultado = {
 
 En el algoritmo greedy nos inspiramos en la implementacion de Dijkstra, y en lugar de un diccionario de distancias, decidimos modelarlo usando un diccionario que al inicio contiene la cantidad total de las unidades de cada producto. El algoritmo recorre por producto su lista de paquetes, y se fija si al quitarle a la _cantidad_ el numero de unidades del paquete, esta _cantidad_ sigue cumpliendo la condicion minima de unidades dada por el agente de la aduana. En caso de cumplir, actualiza la _cantidad_ para reflejar que no requiere esas unidades. En caso de no cumplir, agrega ese paquete a la solucion de ese producto.
 
-Repite este proceso por cada producto y devuelve un diccionario, donde por cada productio tiene una lista con los paquetes solucion. El algoritmo es greedy porque solo considera su estado actual, y se fija si las unidades que esta evaluando son necesarias o no. Luego de la evaluacion, no vuelve a considerar las unidades ya evaluadas. Decidimos no usar un _heap_ para asegurarnos que siempre se analice el paquete con mas unidades disponible, porque aunque eso mejora la probabilidad de obtener una solucion optima, no la asegura, y nos pareció valioso poder mostrar en el punto _4_ estas diferencias, lo cual puede hacerse ordenando los paquetes de menor a mayor de antemano. En ambos casos, usar un _heap_ u ordenar, incrementarian la complejidad en $O(nlogn)$. (Suponiendo que se hace uso de las funciones ```heapsort``` y ```sorted()``` respectivamente). Y en el caso del _heap_ hay que tener en cuenta que _desencolar_ es $O(logn)$.
+Repite este proceso por cada producto y devuelve un diccionario, donde por cada productio tiene una lista con los paquetes solucion. El algoritmo es greedy porque solo considera su estado actual, y se fija si las unidades que esta evaluando son necesarias o no. Luego de la evaluacion, no vuelve a considerar las unidades ya evaluadas. Decidimos no usar un _heap_ para asegurarnos que siempre se analice el paquete con mas unidades disponible, porque aunque eso mejora la probabilidad de obtener una solucion optima, no la asegura, y nos pareció valioso poder mostrar en el punto _4_ estas diferencias, lo cual puede hacerse ordenando los paquetes de menor a mayor de antemano. En ambos casos, usar un _heap_ u ordenar, incrementarian la complejidad en $O(nlogn)$. (Suponiendo que se hace uso de las funciones ```heapsort``` y ```sorted()``` respectivamente). Y en el caso del _heap_ hay que tener en cuenta que _desencolar_ es $O(\log n)$.
 
 >2. Con las mismas consideraciones que en el punto anterior, describir e implementar un algoritmo (que sea óptimo) que resuelva el problema utilizando programación dinámica.
 
@@ -87,11 +87,11 @@ En un principio, pensamos que podiamos solucionar el problema inspirandonos en l
 
 Al igual que en _Knapsack_, decidimos usar una matriz con los _elementos_ como fila y los _pesos_ como columnas. A diferencia de en los problemas mencinados, el elemento puede ser usado por si solo, es decir, el _valor actual_ puede ser solucion por si solo, y en ese caso, no seria parte de una solucion encontrada al sumar paquetes. Finalmente el algoritmo se repite por cada elemento pedido por el agente aduanero, encontrando la mejor combinacion de paquetes para minimizar la perdida de mercancia. De esta forma, el algoritmo es dinámico porque evalua todas las posibles soluciones óptimas.
 
-La ecuación de recurrencia es: $OPT(n, W) = min_condicionado(a, b)$, donde a = no usar el elemento: $OPT(n-1, W)$ y b = usar el elemento: $OPT(n-1, W-Pi) + Vi$ o solo $Vi$
+La ecuación de recurrencia es: $OPT(n, W) = \text{min_condicionado}(a, b)$, donde $a$ = no usar el elemento: $OPT(n-1, W)$ y $b$ = usar el elemento: $OPT(n-1, W-P_i) + V_i$ o solo $V_i$
 
 > 3. Indicar y justificar la complejidad de ambos algoritmos propuestos. Indicar casos (características y ejemplos) de deficiencias en el algoritmo greedy propuesto, para los cuales este no obtenga una solución óptima.
 
-El algoritmo greedy tiene una complejidad de O(n * m), donde _n_ representa la canidad de productos que estamos contrabandeando y _m_ representa la cantidad de paquetes que poseemos de cada producto. Ambas funciones usadas, ```cantidad_productos()``` y ```obtener_paquetes_greedy()```, tienen esta complejidad, porque en ambas se ven todos los productos, y por cada paquete se analizan todos los productos.
+El algoritmo greedy tiene una complejidad de $O(n * m)$, donde _n_ representa la canidad de productos que estamos contrabandeando y _m_ representa la cantidad de paquetes que poseemos de cada producto. Ambas funciones usadas, ```cantidad_productos()``` y ```obtener_paquetes_greedy()```, tienen esta complejidad, porque en ambas se ven todos los productos, y por cada paquete se analizan todos los productos.
 
 Este algoritmo siempre llega a una solucion que cumple las condiciones, pero esta no siempre es optima. Cuando los paquetes no estan ordenados por unidades de mayor a menor, no se puede asegurar que la solucion encontrada sea optima.
 
