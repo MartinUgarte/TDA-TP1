@@ -45,34 +45,41 @@ def algoritmo_es_optimo(nombre_archivo, funcion, ordenar = False):
     Lee el dataset, aplica el algoritmo requerido y devuelve True si la solución obtenida por el algoritmo es óptima.
     Si se quisiese generar nuevos datasets, descomentar la linea con la funcion escribir_archivo()
     """
-    # escribir_archivo(nombre_archivo)
+    #escribir_archivo(nombre_archivo)
     coima_pedida, mercaderia, solucion_optima = leer_archivo(nombre_archivo)
 
     if ordenar:
         mercaderia = ordenar_paquetes(mercaderia)
     solucion_obtenida = funcion(coima_pedida, mercaderia)
 
-    return solucion_es_optima(solucion_obtenida, solucion_optima)   
+    es_optima, diferencias = solucion_es_optima(solucion_obtenida, solucion_optima)    
+    
+    return es_optima, diferencias
 
 def solucion_es_optima(solucion_obtenida, solucion_esperada):
     """
     Devuelve True si la solución obtenida es óptima.
     """
     result = True
+    diferencias = [0, 0]
+    
     for pedido in solucion_obtenida:
         if sum(solucion_obtenida[pedido]) != sum(solucion_esperada[pedido]):
             result = False
-    return result
+        diferencias[0] += sum(solucion_obtenida[pedido])
+        diferencias[1] += sum(solucion_esperada[pedido])
+
+    return result, diferencias
 
 def main():
     porcentaje_greedy_ordenado, porcentaje_greedy_desordenado = 0, 0
     porcentaje_dinamica_ordenado, porcentaje_dinamica_desordenado = 0, 0
     
     for n in range(VOLUMEN):
-        porcentaje_greedy_ordenado += algoritmo_es_optimo(f"./datasets/datos{n}.csv", obtener_paquetes_greedy, True)
-        porcentaje_greedy_desordenado += algoritmo_es_optimo(f"./datasets/datos{n}.csv", obtener_paquetes_greedy)
-        porcentaje_dinamica_ordenado += algoritmo_es_optimo(f"./datasets/datos{n}.csv", obtener_paquetes_dinamica, True)
-        porcentaje_dinamica_desordenado += algoritmo_es_optimo(f"./datasets/datos{n}.csv", obtener_paquetes_dinamica)
+        porcentaje_greedy_ordenado += algoritmo_es_optimo(f"./datasets/datos{n}.csv", obtener_paquetes_greedy, True)[0]
+        porcentaje_greedy_desordenado += algoritmo_es_optimo(f"./datasets/datos{n}.csv", obtener_paquetes_greedy)[0]
+        porcentaje_dinamica_ordenado += algoritmo_es_optimo(f"./datasets/datos{n}.csv", obtener_paquetes_dinamica, True)[0]
+        porcentaje_dinamica_desordenado += algoritmo_es_optimo(f"./datasets/datos{n}.csv", obtener_paquetes_dinamica)[0]
 
     print("Porcentaje de veces que greedy es optimo con mercaderia ordenada: ", porcentaje_greedy_ordenado/VOLUMEN)
     print("Porcentaje de veces que greedy es optimo con mercaderia desordenada: ", porcentaje_greedy_desordenado/VOLUMEN)

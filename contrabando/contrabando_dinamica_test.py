@@ -3,7 +3,6 @@ from armar_set import armar_set_datos
 from contrabando_dinamica import obtener_paquetes_dinamica
 from constantes import *
 
-
 class TestContrabandoDinamica(unittest.TestCase):
 
     def test_sin_paquetes(self):
