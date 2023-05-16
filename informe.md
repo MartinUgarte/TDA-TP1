@@ -75,9 +75,11 @@ resultado = {
 
 > 1. Describir e implementar un algoritmo greedy que, dado un input con los productos que se tienen, y lo pedido como soborno, nos permita salir airosos de la situación, con la mayor cantidad de productos posibles. Justificar por qué el algoritmo es, efectivamente, greedy. Considerar que siempre se nos pedirá una cantidad de productos en existencias (en nuestro ejemplo anterior, no nos habrían pedido que dejemos 7 botellas de vodka radioactivo, ni tampoco mandarinas del Sahara).
 
-En el algoritmo greedy nos inspiramos en la implementacion de Dijkstra, y en lugar de un diccionario de distancias, decidimos modelarlo usando un diccionario que al inicio contiene la cantidad total de las unidades de cada producto. El algoritmo recorre por producto su lista de paquetes, y se fija si al quitarle a la _cantidad_ el numero de unidades del paquete, esta _cantidad_ sigue cumpliendo la condicion minima de unidades dada por el agente de la aduana. En caso de cumplir, actualiza la _cantidad_ para reflejar que no requiere esas unidades. En caso de no cumplir, agrega ese paquete a la solucion de ese producto.
+Nuestro algorimo greedy recibe la mercaderia pedida como soborno y la disponible, a partir de la mercaderia disponible obtiene el total de unidades de cada producto. Por cada tipo de producto pedido como soborno, se revisan todos los paquetes para determinar el/los optimos. La forma de determinar los paquetes optimos es haciendo uso de la cantidad total de ese producto: se evalua si al quitar el producto la cantidad restante sigue cumpliendo los requerimientos del agente de aduana. 
 
-Repite este proceso por cada producto y devuelve un diccionario, donde por cada productio tiene una lista con los paquetes solucion. El algoritmo es greedy porque solo considera su estado actual, y se fija si las unidades que esta evaluando son necesarias o no. Luego de la evaluacion, no vuelve a considerar las unidades ya evaluadas. Decidimos no usar un _heap_ para asegurarnos que siempre se analice el paquete con mas unidades disponible, porque aunque eso mejora la probabilidad de obtener una solucion optima, no la asegura, y nos pareció valioso poder mostrar en el punto _4_ estas diferencias, lo cual puede hacerse ordenando los paquetes de menor a mayor de antemano. En ambos casos, usar un _heap_ u ordenar, incrementarian la complejidad en $O(nlogn)$. (Suponiendo que se hace uso de las funciones ```heapsort``` y ```sorted()``` respectivamente). Y en el caso del _heap_ hay que tener en cuenta que _desencolar_ es $O(logn)$.
+En el caso del ejemplo, tenemos que el pedido es al menos `5` unidades de `cigarrillos`, y el total de cigarrillos a disposicion es de `13` unidades, para seguir con la solucion presentada en el ejemplo vamos a tomar la mercaderia como ordenada de mayor a menor, las diferencias de tener la mercaderia o no ordenada se explican en detalle en las siguientes preguntas. De esta forma el algoritmo va a iterar por los paquetes de `cigarrillos` disponibles `[8,3,2]`, al evaluar que sin el paquete con `8` unidades se sigue cumpliendo con el pedido, va a restar estas unidades del total, quedando este en `5`, al evaluar el `3` y el `2` el algoritmo determina que estas unidades son escenciales y las agrega al arreglo solucion. Como el algoritmo itera en un principio por la mercaderia que se encuentra en el pedido del agente de aduana, en este caso no se evaluaria el `vodka`. 
+
+Es un algoritmo _greedy_ porque en cada iteracion evalua si el paquete es necesario en ese momento o no, no evalua el impacto que tendria quitar o dejar el paquete en una solucion futura. En el ejemplo anterior, de estar el arreglo desordenado, el algoritmo no evaluaria que sacar el `3` antes que el `8` daria una solucion que cumpla los requerimientos pero no la solucion optima que los cumple. 
 
 >2. Con las mismas consideraciones que en el punto anterior, describir e implementar un algoritmo (que sea óptimo) que resuelva el problema utilizando programación dinámica.
 
@@ -145,7 +147,7 @@ Para poder comparar ambos algoritmos, decidimos armar una funcion que nos indiqu
 
 ```
 >>> python3 encontrar_mejor_soborno.py
->>> Porcentaje de veces que greedy es optimo con mercaderia ordenada:  0.7
+>>> Porcentaje de veces que greedy es optimo con mercaderia ordenada:  0.85
 >>> Porcentaje de veces que greedy es optimo con mercaderia desordenada:  0.0
 >>> Porcentaje de veces que dinamica es optimo con mercaderia ordenada:  1.0
 >>> Porcentaje de veces que dinamica es optimo con mercaderia desordenada:  1.0
