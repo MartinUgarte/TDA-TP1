@@ -13,7 +13,7 @@
 
 La fórmula del Teorema Maestro está dada por
 
-$$T(n)=A*T(n/B) + O(n^c)$$
+$$T(n)=A*T(\frac{n}{B}) + O(n^c)$$
 
 Donde $A$ representa la cantidad de llamados recursivos, $B$ la proporción del tamaño original de la lista con el que llamamos recursivamente y $O(n^c)$ el costo de las operaciones que no son llamadas recursivas.
 
@@ -41,11 +41,12 @@ Las mediciones se encuentran en el archivo **mediciones.py** y la implementació
 
 > 4. En caso que la complejidad obtenida en el punto 1 no se condiga con la realidad, indicar por qué (qué condición falla).
 
-La complejidad obtenida en el punto 1, es decir, utilizando el teorema maestro, no se condice con la realidad ya la condición de que el caso base sea constante falla en este problema. Esto se debe a que queda un solo arreglo de $h$ elementos, lo que hace que el caso base varíe.
+La complejidad obtenida en el punto 1, es decir, utilizando el teorema maestro, no se condice con la realidad ya que la condición de que el caso base sea constante falla en este problema. Esto se debe a que queda un solo arreglo de $h$ elementos, lo que hace que el caso base varíe.
 
 > 5. En dicho caso, se requiere llegar a la complejidad correcta (no solamente enunciarla, sino demostrar cuál es).
 
 Construimos a partir de la ecuación de recurrencia
+
 $$
 \begin{aligned}
  T(n)&=2T(\frac{n}{2})+O(n)
@@ -64,9 +65,11 @@ Entonces
 
 $$
 \begin{gather*}
- T(2^x)=2T(\frac{2^x}{2})+O(2^x) \\\\
- T(2^x)=2T(2^{x-1})+O(2^x) \\\\
- T(2^{x-1})=2T(2^{x-2})+O(2^{x-1}) \\\\
+ T(2^x)=2T(\frac{2^x}{2})+O(2^x) \\
+ \\
+ T(2^x)=2T(2^{x-1})+O(2^x) \\
+ \\
+ T(2^{x-1})=2T(2^{x-2})+O(2^{x-1}) \\
 \end{gather*}
 $$
 
@@ -74,11 +77,15 @@ Aquí el caso base es $O(1)$ ya que lo que se hace es devolver el único arreglo
 
 $$
 \begin{gather*}
- T(n)=2\sum_{i=0}^{\log_k-1}(2^iO(2^{x-i-1}))+O(2^x) \\\\
- T(n)=2\sum_{i=0}^{\log_k-1}O(2^{x-1})+O(2^x) \\\\
- T(n)=\sum_{i=0}^{\log_k-1}2O(2^{x-1})+O(2^x) \\\\
- T(n)=\sum_{i=0}^{\log_k-1}O(2^x)+O(2^x) \\\\
- T(n)=\sum_{i=0}^{\log_k}O(2^x) \\\\ 
+ T(n)=2\sum_{i=0}^{\log_k-1}(2^iO(2^{x-i-1}))+O(2^x) \\
+ \\
+ T(n)=2\sum_{i=0}^{\log_k-1}O(2^{x-1})+O(2^x) \\
+ \\
+ T(n)=\sum_{i=0}^{\log_k-1}2O(2^{x-1})+O(2^x) \\
+ \\
+ T(n)=\sum_{i=0}^{\log_k-1}O(2^x)+O(2^x) \\
+ \\
+ T(n)=\sum_{i=0}^{\log_k}O(2^x) \\
 \end{gather*}
 $$
 
@@ -86,8 +93,10 @@ Por lo tanto la complejidad estaría quedando
 
 $$
 \begin{gather*}
- \log_kO(2^x) \\\\
- \log_kO(n) \\\\
+ \log_kO(2^x) \\
+ \\
+ \log_kO(n) \\
+ \\
  O(n \log_k)
 \end{gather*}
 $$
