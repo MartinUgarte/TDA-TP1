@@ -21,36 +21,80 @@ En este caso, tenemos dos llamadas recursivas, el arreglo es partido a la mitad 
 
 Por lo cual, $A = 2$, $B = 2$ y $C = 1$.
 
-Luego, $logB(A) = log_2(2) = 1$
+Luego, $\log_B(A) = \log_2(2) = 1$
 
-Según el Teorema Maestro, como $logB(A)=C=1$, entonces la complejidad del algoritmo propuesto es $O(n^c log n)=O(n logn)$, donde $n$ es la cantidad total de elementos, es decir, $k * h$.
+Según el Teorema Maestro, como $logB(A)=C=1$, entonces la complejidad del algoritmo propuesto es $O(n^c \log n)=O(n \log n)$, donde $n$ es la cantidad total de elementos, es decir, $k * h$.
 
 > 2. Describir el algoritmo que utiliza heaps, y determinar su complejidad.
 
 Se tiene el conjunto de arreglos, el heap y un arreglo vacío. En el heap se encolan los primeros datos de cada arreglo de la forma (dato, número_arreglo). Luego, mientras que el heap no esté vacío, se desencola del heap y se agrega el valor en el arreglo solucion. Posteriormente se guarda el siguiente elemento del arreglo al que pertenecía el dato guardado, y de haber ya analizado todo el arreglo no se hace nada. Se continúa así hasta que no queda ningún dato en el heap, y se devuelve el arreglo solucion.
 
-Dado que se crea un heap de tamaño $k$, se insertan los primeros elementos de cada uno de los $k$ lo cual tiene una complejidad de $O(klogk)$ arreglos ordenados en el heap y luego se itera extrayendo un elemento ($O(1)$), e insertando otro ($O(logk)$), se puede deducir que la complejidad de este algoritmo es O(n log k), donde $n$ es la cantidad total de elementos y $k$ la cantidad de arreglos.
+Dado que se crea un heap de tamaño $k$, se insertan los primeros elementos de cada uno de los $k$ lo cual tiene una complejidad de $O(klogk)$ arreglos ordenados en el heap y luego se itera extrayendo un elemento ( $O(1)$ ), e insertando otro ( $O(\log k)$ ), se puede deducir que la complejidad de este algoritmo es $O(n \log k)$, donde $n$ es la cantidad total de elementos y $k$ la cantidad de arreglos.
 
 > 3. Implementar ambos algoritmos, y hacer mediciones (y gráficos) que permitan entender si las complejidades obtenidas para cada uno se condicen con la realidad.
+
+En nuestro caso hicimos dos gráficos distintos: uno que indica la complejidad temporal en base a la cantidad de arreglos en el problema y otro en base a la cantidad de elementos por cada arreglo. Por cada uno, realizamos una curva utilizando nuestra implementación del algoritmo de división y conquista con un arreglo de arreglos ordenado, es decir $[[1,2,...],[4,5,6,...]...]$, luego otra curva pero que utiliza arreglos con elementos completamente aleatorios, y finalmente una tercera curva que usa heap como solución.
 
 Las mediciones se encuentran en el archivo **mediciones.py** y la implementación de ambos algoritmos están en **k_merge_dyc.py** y **k_merge_heap.py**. Las conclusiones obtenidas se encuentran en el último inciso.
 
 ![](/k_merge/graficos/ambos_graficos.png)
 
-
 > 4. En caso que la complejidad obtenida en el punto 1 no se condiga con la realidad, indicar por qué (qué condición falla).
 
-La complejidad obtenida en el punto 1, es decir, utilizando el teorema maestro, no se condice con la realidad ya que este teorema contempla el caso en el que se ordena un solo arreglo, equivalente a un mergesort, cuando en realidad nuestro método de ordenamiento aplica mergesort reiteradamente.
+La complejidad obtenida en el punto 1, es decir, utilizando el teorema maestro, no se condice con la realidad ya la condición de que el caso base sea constante falla en este problema. Esto se debe a que queda un solo arreglo de $h$ elementos, lo que hace que el caso base varíe.
 
 > 5. En dicho caso, se requiere llegar a la complejidad correcta (no solamente enunciarla, sino demostrar cuál es).
 
-En base a lo explicado en el inciso anterior, el teorema maestro no está considerando el ciclo generado al repetir la funcion por los k arreglos, el cual al final de cuentas termina teniendo una complejidad de $O(n)$ donde $n$ es la cantidad total de elementos en el problema. En consecuencia, según nosotros la complejidad real sería $O(n^2logn)$, lo cual puede verse plasmado en los gráficos. La verdadera curva $O(nlogk)$ es la que se en el grafico del k_merge_heap, y se puede ver como en los ambos casos de D&C las curvas divergen cuando heap se empieza a planchar.
+Construimos a partir de la ecuación de recurrencia
+$$
+\begin{aligned}
+ T(n)&=2T(\frac{n}{2})+O(n)
+\end{aligned}
+$$
+
+Establecemos
+
+$$
+\begin{aligned}
+ n=2^x
+\end{aligned}
+$$
+
+Entonces
+
+$$
+\begin{gather*}
+ T(2^x)=2T(\frac{2^x}{2})+O(2^x) \\\\
+ T(2^x)=2T(2^{x-1})+O(2^x) \\\\
+ T(2^{x-1})=2T(2^{x-2})+O(2^{x-1}) \\\\
+\end{gather*}
+$$
+
+Aquí el caso base es $O(1)$ ya que lo que se hace es devolver el único arreglo restante, por lo que se puede ignorar de la sumatoria.
+
+$$
+\begin{gather*}
+ T(n)=2\sum_{i=0}^{\log_k-1}(2^iO(2^{x-i-1}))+O(2^x) \\\\
+ T(n)=2\sum_{i=0}^{\log_k-1}O(2^{x-1})+O(2^x) \\\\
+ T(n)=\sum_{i=0}^{\log_k-1}2O(2^{x-1})+O(2^x) \\\\
+ T(n)=\sum_{i=0}^{\log_k-1}O(2^x)+O(2^x) \\\\
+ T(n)=\sum_{i=0}^{\log_k}O(2^x) \\\\ 
+\end{gather*}
+$$
+
+Por lo tanto la complejidad estaría quedando
+
+$$
+\begin{gather*}
+ \log_kO(2^x) \\\\
+ \log_kO(n) \\\\
+ O(n \log_k)
+\end{gather*}
+$$
 
 > 6. Indicar cualquier conclusión adicional que les parezca relevante en base a lo analizado.
 
-En nuestro caso hicimos dos gráficos distintos: uno que indica la complejidad temporal en base a la cantidad de arreglos en el problema y otro en base a la cantidad de elementos por cada arreglo. Por cada uno, realizamos una curva utilizando nuestra implementación del algoritmo de división y conquista con un arreglo de arreglos ordenado, es decir $[[1,2,...],[4,5,6,...]...]$, luego otra curva pero que utiliza arreglos con elementos completamente aleatorios, y finalmente una tercera curva que usa heap como solución.
-
-En conclusión, se puede observar obviamente que usando datos aleatorios se tarda más en encontrar la solución ya que estos no vienen para nada ordenados. Luego le sigue la curva asociada a división y conquista con los arreglos "fijos" y posteriormente la curva de heap que promete indicar más velocidad al estar más planchada que las otras, condiciéndose con la complejidad antes explicada.
+Como la complejidad de ambos algortimos es la misma, se puede visualizar que la forma de crecimiento es la misma, por lo que está bien que las curvas se parezcan (lo único que difieren es el tiempo exacto que tarda cada uno de ellos)
 
 ## Segunda Parte: *Contrabando*
 
@@ -75,11 +119,11 @@ resultado = {
 
 > 1. Describir e implementar un algoritmo greedy que, dado un input con los productos que se tienen, y lo pedido como soborno, nos permita salir airosos de la situación, con la mayor cantidad de productos posibles. Justificar por qué el algoritmo es, efectivamente, greedy. Considerar que siempre se nos pedirá una cantidad de productos en existencias (en nuestro ejemplo anterior, no nos habrían pedido que dejemos 7 botellas de vodka radioactivo, ni tampoco mandarinas del Sahara).
 
-Nuestro algorimo greedy recibe la mercaderia pedida como soborno y la disponible, a partir de la mercaderia disponible obtiene el total de unidades de cada producto. Por cada tipo de producto pedido como soborno, se revisan todos los paquetes para determinar el/los optimos. La forma de determinar los paquetes optimos es haciendo uso de la cantidad total de ese producto: se evalua si al quitar el producto la cantidad restante sigue cumpliendo los requerimientos del agente de aduana. 
+Nuestro algorimo greedy recibe la mercaderia pedida como soborno y la disponible, a partir de la mercaderia disponible obtiene el total de unidades de cada producto. Por cada tipo de producto pedido como soborno, se revisan todos los paquetes para determinar el/los optimos. La forma de determinar los paquetes optimos es haciendo uso de la cantidad total de ese producto: se evalua si al quitar el producto la cantidad restante sigue cumpliendo los requerimientos del agente de aduana.
 
-En el caso del ejemplo, tenemos que el pedido es al menos `5` unidades de `cigarrillos`, y el total de cigarrillos a disposicion es de `13` unidades, para seguir con la solucion presentada en el ejemplo vamos a tomar la mercaderia como ordenada de mayor a menor, las diferencias de tener la mercaderia o no ordenada se explican en detalle en las siguientes preguntas. De esta forma el algoritmo va a iterar por los paquetes de `cigarrillos` disponibles `[8,3,2]`, al evaluar que sin el paquete con `8` unidades se sigue cumpliendo con el pedido, va a restar estas unidades del total, quedando este en `5`, al evaluar el `3` y el `2` el algoritmo determina que estas unidades son escenciales y las agrega al arreglo solucion. Como el algoritmo itera en un principio por la mercaderia que se encuentra en el pedido del agente de aduana, en este caso no se evaluaria el `vodka`. 
+En el caso del ejemplo, tenemos que el pedido es al menos `5` unidades de `cigarrillos`, y el total de cigarrillos a disposicion es de `13` unidades, para seguir con la solucion presentada en el ejemplo vamos a tomar la mercaderia como ordenada de mayor a menor, las diferencias de tener la mercaderia o no ordenada se explican en detalle en las siguientes preguntas. De esta forma el algoritmo va a iterar por los paquetes de `cigarrillos` disponibles `[8,3,2]`, al evaluar que sin el paquete con `8` unidades se sigue cumpliendo con el pedido, va a restar estas unidades del total, quedando este en `5`, al evaluar el `3` y el `2` el algoritmo determina que estas unidades son escenciales y las agrega al arreglo solucion. Como el algoritmo itera en un principio por la mercaderia que se encuentra en el pedido del agente de aduana, en este caso no se evaluaria el `vodka`.
 
-Es un algoritmo _greedy_ porque en cada iteracion evalua si el paquete es necesario en ese momento o no, no evalua el impacto que tendria quitar o dejar el paquete en una solucion futura. En el ejemplo anterior, de estar el arreglo desordenado, el algoritmo no evaluaria que sacar el `3` antes que el `8` daria una solucion que cumpla los requerimientos pero no la solucion optima que los cumple. 
+Es un algoritmo _greedy_ porque en cada iteracion evalua si el paquete es necesario en ese momento o no, no evalua el impacto que tendria quitar o dejar el paquete en una solucion futura. En el ejemplo anterior, de estar el arreglo desordenado, el algoritmo no evaluaria que sacar el `3` antes que el `8` daria una solucion que cumpla los requerimientos pero no la solucion optima que los cumple.
 
 >2. Con las mismas consideraciones que en el punto anterior, describir e implementar un algoritmo (que sea óptimo) que resuelva el problema utilizando programación dinámica.
 
@@ -89,11 +133,11 @@ En un principio, pensamos que podiamos solucionar el problema inspirandonos en l
 
 Al igual que en _Knapsack_, decidimos usar una matriz con los _elementos_ como fila y los _pesos_ como columnas. A diferencia de en los problemas mencinados, el elemento puede ser usado por si solo, es decir, el _valor actual_ puede ser solucion por si solo, y en ese caso, no seria parte de una solucion encontrada al sumar paquetes. Finalmente el algoritmo se repite por cada elemento pedido por el agente aduanero, encontrando la mejor combinacion de paquetes para minimizar la perdida de mercancia. De esta forma, el algoritmo es dinámico porque evalua todas las posibles soluciones óptimas.
 
-La ecuación de recurrencia es: $OPT(n, W) = min_condicionado(a, b)$, donde a = no usar el elemento: $OPT(n-1, W)$ y b = usar el elemento: $OPT(n-1, W-Pi) + Vi$ o solo $Vi$
+La ecuación de recurrencia es: $\text{OPT}(n, W) = \text{min-condicionado}(a, b)$, donde $a$ = no usar el elemento: $\text{OPT}(n-1, W)$ y $b$ = usar el elemento: $\text{OPT}(n-1, W-P_i) + Vi$ o solo $V_i$
 
 > 3. Indicar y justificar la complejidad de ambos algoritmos propuestos. Indicar casos (características y ejemplos) de deficiencias en el algoritmo greedy propuesto, para los cuales este no obtenga una solución óptima.
 
-El algoritmo greedy tiene una complejidad de O(n * m), donde _n_ representa la canidad de productos que estamos contrabandeando y _m_ representa la cantidad de paquetes que poseemos de cada producto. Ambas funciones usadas, ```cantidad_productos()``` y ```obtener_paquetes_greedy()```, tienen esta complejidad, porque en ambas se ven todos los productos, y por cada paquete se analizan todos los productos.
+El algoritmo greedy tiene una complejidad de $O(n * m)$, donde _n_ representa la canidad de productos que estamos contrabandeando y _m_ representa la cantidad de paquetes que poseemos de cada producto. Ambas funciones usadas, ```cantidad_productos()``` y ```obtener_paquetes_greedy()```, tienen esta complejidad, porque en ambas se ven todos los productos, y por cada paquete se analizan todos los productos.
 
 Este algoritmo siempre llega a una solucion que cumple las condiciones, pero esta no siempre es optima. Cuando los paquetes no estan ordenados por unidades de mayor a menor, no se puede asegurar que la solucion encontrada sea optima.
 
@@ -152,5 +196,9 @@ Para poder comparar ambos algoritmos, decidimos armar una funcion que nos indiqu
 >>> Porcentaje de veces que dinamica es optimo con mercaderia ordenada:  1.0
 >>> Porcentaje de veces que dinamica es optimo con mercaderia desordenada:  1.0
 ```
+
+Para un análisis más interesante, graficamos cómo varían las soluciones en función del tamaño de la entrada. Con esto también se puede ver la eficiencia: queremos ver por cuanto le "erra" en los casos cuando no resulta óptimo. El análisis más detallado se encuentra en el archivo `graficos.ipynb`
+
+![](/contrabando/graficos/graficos.png)
 
 En los archivos ```_test``` de cada algoritmo se encuentran dos pruebas de volumen. Estas se realizaron usando la funcion ```armar_set_datos()```. Para el algoritmo dinámico se requiere que la suma de la solucion obtenida sea igual a la suma de la solucion optima proporcionada por ```armar_set_datos()```, se trabaja con la suma en ambos casos porque al usar valores random, no podemos asegurar que el algoritmo no llegue a un resultado igual de óptimo pero utilizando diferentes paquetes a los pensados en un principio. Para el algoritmo greedy se requiere que la suma de la solucion obtenida sea mayor o igual a la suma de la solución óptima, porque se presume que greedy no va a ser óptimo, pero si va a dar una solución que cumpla las condiciones dadas.
