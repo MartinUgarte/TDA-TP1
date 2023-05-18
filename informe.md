@@ -33,7 +33,7 @@ Dado que se crea un heap de tamaño $k$, se insertan los primeros elementos de c
 
 > 3. Implementar ambos algoritmos, y hacer mediciones (y gráficos) que permitan entender si las complejidades obtenidas para cada uno se condicen con la realidad.
 
-En nuestro caso hicimos dos gráficos distintos: uno que indica la complejidad temporal en base a la cantidad de arreglos en el problema y otro en base a la cantidad de elementos por cada arreglo. Por cada uno, realizamos una curva utilizando nuestra implementación del algoritmo de división y conquista con un arreglo de arreglos ordenado, es decir $[[1,2,...],[4,5,6,...]...]$, luego otra curva pero que utiliza arreglos con elementos completamente aleatorios, y finalmente una tercera curva que usa heap como solución.
+En nuestro caso hicimos dos gráficos distintos: uno que indica la complejidad temporal en base a la cantidad de arreglos en el problema y otro en base a la cantidad de elementos por cada arreglo. Por cada uno, realizamos una curva utilizando nuestra implementación del algoritmo de división y conquista con un arreglo de arreglos ordenado, es decir $[[1,2,3],[4,5,6]...]$, luego otra curva pero que utiliza arreglos con elementos completamente aleatorios, es decir $[[1,3,12...],[24,35,346,...]...]$ ., y finalmente una tercera curva que usa heap como solución.
 
 Las mediciones se encuentran en el archivo **mediciones.py** y la implementación de ambos algoritmos están en **k_merge_dyc.py** y **k_merge_heap.py**. Las conclusiones obtenidas se encuentran en el último inciso.
 
