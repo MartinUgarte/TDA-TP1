@@ -13,7 +13,7 @@
 
 La fórmula del Teorema Maestro está dada por
 
-$$T(n)=A*T(\frac{n}{B}) + O(n^c)$$
+$$T(n)=A*T \left(\frac{n}{B}\right) + O(n^c)$$
 
 Donde $A$ representa la cantidad de llamados recursivos, $B$ la proporción del tamaño original de la lista con el que llamamos recursivamente y $O(n^c)$ el costo de las operaciones que no son llamadas recursivas.
 
@@ -93,11 +93,11 @@ Por lo tanto la complejidad estaría quedando
 
 $$
 \begin{gather*}
- \log_kO(2^x) \\
+ \log k O(2^x) \\
  \\
  \log_kO(n) \\
  \\
- O(n \log_k)
+ O(n \log k)
 \end{gather*}
 $$
 
